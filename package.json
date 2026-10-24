@@ -1,0 +1,58 @@
+{
+	"name": "@aimuzov/__NAME__",
+	"version": "0.0.0",
+	"description": "__DESCRIPTION__",
+	"keywords": [
+		"mcp",
+		"model-context-protocol",
+		"mcp-server",
+		"claude"
+	],
+	"homepage": "https://github.com/aimuzov/__NAME__#readme",
+	"bugs": {
+		"url": "https://github.com/aimuzov/__NAME__/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/aimuzov/__NAME__.git"
+	},
+	"license": "MIT",
+	"author": "Aleksey Imuzov",
+	"type": "module",
+	"bin": {
+		"__NAME__": "build/index.js"
+	},
+	"files": [
+		"build",
+		".mcp.json.example"
+	],
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"engines": {
+		"node": ">=26"
+	},
+	"scripts": {
+		"start": "node src/index.ts",
+		"build": "rm -rf build && tsc -p tsconfig.build.json",
+		"typecheck": "tsc",
+		"test": "node --test 'src/**/*.test.ts'",
+		"format": "oxlint --fix && prettier --write .",
+		"format:check": "prettier --check .",
+		"lint": "oxlint --deny-warnings",
+		"prepack": "npm run build"
+	},
+	"dependencies": {
+		"@aimuzov/infra-mcp-kit": "github:aimuzov/infra-mcp-kit#v1.0.0",
+		"@modelcontextprotocol/sdk": "1.32.1",
+		"zod": "4.6.7"
+	},
+	"devDependencies": {
+		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#v4.0.0",
+		"@types/node": "26.6.5",
+		"oxlint": "1.87.0",
+		"prettier": "3.9.9",
+		"typescript": "6.0.3"
+	}
+}

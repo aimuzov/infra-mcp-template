@@ -1,0 +1,41 @@
+# __NAME__ на сервере проектов. Порты 80/443 у общего Caddy из aimuzov/infra-server,
+# он проксирует домен сюда через сеть `edge`.
+
+name: __NAME__
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: '5m'
+    max-file: '2'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: __NAME__
+    container_name: __NAME__
+    restart: unless-stopped
+    env_file: ../.env
+    volumes:
+      - data:/data
+    mem_limit: 256m
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:8080/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - edge
+    logging: *logging
+
+volumes:
+  data:
+    name: __NAME__-data
+
+networks:
+  edge:
+    name: edge
+    external: true
