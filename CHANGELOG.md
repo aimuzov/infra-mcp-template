@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/aimuzov/infra-mcp-template/compare/v0.1.1...v0.2.0) (2026-10-25)
+
+
+### Features
+
+* build the connector pages with Astro on infra-mcp-kit 2.0 ([7c56b3f](https://github.com/aimuzov/infra-mcp-template/commit/7c56b3fa57fbd5118ff608c9d882619bc16810c9))
+* build the connector pages with Astro on infra-mcp-kit 2.0 ([9b74dc3](https://github.com/aimuzov/infra-mcp-template/commit/9b74dc3e662eaa4a688f0fd366cb951488d1a24d))
+
 ## [0.1.1](https://github.com/aimuzov/infra-mcp-template/compare/v0.1.0...v0.1.1) (2026-10-25)
 
 
