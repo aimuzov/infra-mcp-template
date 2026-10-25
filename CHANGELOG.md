@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/aimuzov/infra-mcp-template/compare/v0.1.0...v0.1.1) (2026-10-25)
+
+
+### Bug Fixes
+
+* **http:** refuse login until verify is implemented ([0662363](https://github.com/aimuzov/infra-mcp-template/commit/066236338c6b9c7b41dcf13e3c3562ae8b5d5235))
+* refuse logins until verifyToken is implemented ([a82b4b6](https://github.com/aimuzov/infra-mcp-template/commit/a82b4b6797f9f40ab7cc90e06b50c62d6a10c26d))
+
 ## 0.1.0 (2026-10-25)
 
 
