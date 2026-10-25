@@ -1,0 +1,15 @@
+---
+import Layout from '@aimuzov/infra-mcp-kit/astro/layout.astro'
+
+// Подчёркивание убирает остров из маршрутов, а соседство -- `../` из импорта.
+import Status from './_status.svelte'
+---
+
+<!-- Пример своей страницы на каркасе кита. Замени или удали вместе с `/api/status`. -->
+<Layout title="Статус __NAME__" screen="status">
+	<section class="hero hero--small">
+		<p class="eyebrow">Статус</p>
+		<h1>__NAME__</h1>
+	</section>
+	<Status client:load />
+</Layout>

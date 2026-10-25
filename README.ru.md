@@ -20,16 +20,29 @@ npm install
 
 - Заменить инструмент `echo` в `src/server.ts` на настоящие и поправить список в `src/server.test.ts`.
 - В `verifyToken` из `src/http.ts` проверять токен запросом к API сервиса и возвращать id пользователя.
+- Вписать инструменты и тексты лендинга и формы входа в `mcpPages` в `astro.config.mjs`. Поля формы там и в
+  `tokenFormLogin` из `src/http.ts` сходятся по имени.
+- Оставить или убрать пример `/status`: `src/frontend/pages/status.astro`, его остров и маршрут `/api/status`.
 - Сбросить версию и историю релизов, иначе новый сервер унаследует их от шаблона:
   `echo '{}' > .release-please-manifest.json`, `npm pkg set version=0.0.0 && npm install` и пустой
   `CHANGELOG.md`. Первый релиз тогда возьмёт `initial-version` из `release-please-config.json`.
 - В настройках репозитория разрешить GitHub Actions создавать и одобрять PR, без этого не работает release-please.
 
+## Страницы
+
+Лендинг, вход, ошибка и 404 приходят из `mcpPages()` кита, свои страницы сервера лежат в `src/frontend/pages` на
+каркасе кита, как у сайтов. `npm run build` собирает сервер через `tsc` и страницы через `astro build` в
+`build/public`, их и раздаёт коннектор. Astro и Svelte остаются dev-зависимостями и не попадают ни в `npx`, ни в
+Docker-образ. `npm run dev:pages` поднимает одни страницы на dev-сервере Astro.
+
+Серверу только для stdio не нужны `astro.config.mjs`, `svelte.config.js`, `postcss.config.mjs`, `src/frontend` и
+`src/http.ts` вместе с их dev-зависимостями.
+
 ## Плейсхолдеры
 
 - `__NAME__` -- репозиторий, npm-пакет `@aimuzov/__NAME__`, бинарь и имя контейнера.
 - `__DOMAIN__` -- адрес удалённого коннектора.
-- `__DESCRIPTION__` -- строка для `package.json` и лендинга.
+- `__DESCRIPTION__` -- строка для `package.json` и лендинга в `astro.config.mjs`.
 
 ## Релиз
 

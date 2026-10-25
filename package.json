@@ -35,7 +35,8 @@
 	},
 	"scripts": {
 		"start": "node src/index.ts",
-		"build": "rm -rf build && tsc -p tsconfig.build.json",
+		"dev:pages": "astro dev",
+		"build": "rm -rf build && tsc -p tsconfig.build.json && astro build",
 		"typecheck": "tsc",
 		"test": "node --test 'src/**/*.test.ts'",
 		"format": "oxlint --fix && prettier --write .",
@@ -44,15 +45,22 @@
 		"prepack": "npm run build"
 	},
 	"dependencies": {
-		"@aimuzov/infra-mcp-kit": "github:aimuzov/infra-mcp-kit#v1.0.1",
+		"@aimuzov/infra-mcp-kit": "github:aimuzov/infra-mcp-kit#v2.0.0",
 		"@modelcontextprotocol/sdk": "1.32.1",
 		"zod": "4.6.7"
 	},
 	"devDependencies": {
-		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#v4.0.0",
+		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#v4.1.0",
+		"@astrojs/check": "0.9.10",
+		"@astrojs/svelte": "9.0.1",
+		"@lucide/svelte": "1.39.0",
 		"@types/node": "26.6.5",
+		"astro": "7.3.7",
 		"oxlint": "1.87.0",
+		"postcss-nested": "8.0.1",
 		"prettier": "3.9.9",
+		"svelte": "5.57.2",
+		"svelte-check": "4.7.6",
 		"typescript": "6.0.3"
 	}
 }
