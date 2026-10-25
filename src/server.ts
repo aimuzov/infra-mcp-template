@@ -12,11 +12,16 @@ const version = readVersion(import.meta.url)
  */
 export type Context = {
 	apiToken: string
+	/** Откуда токен: от него зависит совет, если токена нет. */
+	via: 'stdio' | 'http'
 }
 
-export const loadContext = (env: Env = process.env): Context => ({ apiToken: str(env, 'API_TOKEN') })
+export const loadContext = (env: Env = process.env): Context => ({ apiToken: str(env, 'API_TOKEN'), via: 'stdio' })
 
-const NO_TOKEN = 'API_TOKEN is not set. Add it to the env of this server in your MCP config'
+const NO_TOKEN = {
+	stdio: 'API_TOKEN is not set. Add it to the env of this server in your MCP config',
+	http: 'The access token carries no API token of the service. Reconnect the connector',
+}
 
 /**
  * Один сервер на stdio-процесс или на HTTP-запрос.
@@ -36,7 +41,7 @@ export function createServer(context: Context): McpServer {
 			inputSchema: { message: z.string().min(1).describe('What to send back') },
 		},
 		tool(({ message }: { message: string }) => {
-			if (!context.apiToken) throw new Error(NO_TOKEN)
+			if (!context.apiToken) throw new Error(NO_TOKEN[context.via])
 
 			return message
 		}),
