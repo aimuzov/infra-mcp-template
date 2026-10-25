@@ -1,5 +1,4 @@
-import { readVersion, str, tool, type Env } from '@aimuzov/infra-mcp-kit'
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import { McpServer, readVersion, str, tool, type Env } from '@aimuzov/infra-mcp-kit'
 import { z } from 'zod'
 
 export const NAME = '__NAME__'

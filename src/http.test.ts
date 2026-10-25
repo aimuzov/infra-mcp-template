@@ -24,7 +24,7 @@ const acceptAny: Verify = ({ token = '' }) => ({ subject: 'user-1', claims: { ap
 const publicDir = fakePages()
 
 const app = (verify?: Verify) => (base: string) =>
-	createHttpApp(httpOptions({ config: config(base), store: memoryStore(), verify, publicDir })).app
+	createHttpApp(httpOptions({ config: config(base), store: memoryStore(), verify, publicDir }))
 
 const http = await startHttp(app(acceptAny))
 const untouched = await startHttp(app())
