@@ -1,3 +1,4 @@
+import type { Server } from 'node:http'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { dataDir, readVersion, type Env } from '@aimuzov/infra-mcp-kit'
@@ -68,9 +69,15 @@ export function httpOptions({
 	}
 }
 
-/** `serve --http`: клиенты и коды OAuth живут в SQLite в каталоге данных. */
-export async function serve(env: Env = process.env): Promise<void> {
-	await serveHttp(
-		httpOptions({ config: loadHttpConfig(env), store: sqliteStore(join(dataDir(NAME, env), 'auth.db')) }),
+/**
+ * `serve --http`: клиенты и коды OAuth живут в SQLite в каталоге данных.
+ * Проверку токена и страницы можно подменить, а сервер возвращается: это для тестов.
+ */
+export async function serve(
+	env: Env = process.env,
+	parts: Pick<HttpParts, 'verify' | 'publicDir'> = {},
+): Promise<Server> {
+	return serveHttp(
+		httpOptions({ config: loadHttpConfig(env), store: sqliteStore(join(dataDir(NAME, env), 'auth.db')), ...parts }),
 	)
 }

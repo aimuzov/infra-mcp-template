@@ -1,0 +1,18 @@
+[
+	{
+		"name": "echo",
+		"title": "Echo",
+		"description": "Return the message back. An example tool of the template.",
+		"inputSchema": {
+			"type": "object",
+			"properties": {
+				"message": {
+					"type": "string",
+					"minLength": 1,
+					"description": "What to send back"
+				}
+			},
+			"required": ["message"]
+		}
+	}
+]
