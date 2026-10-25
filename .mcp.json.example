@@ -1,0 +1,11 @@
+{
+	"mcpServers": {
+		"__NAME__": {
+			"command": "npx",
+			"args": ["-y", "@aimuzov/__NAME__"],
+			"env": {
+				"API_TOKEN": "your-api-token"
+			}
+		}
+	}
+}
