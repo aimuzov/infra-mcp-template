@@ -19,7 +19,10 @@ npm install
 Дальше:
 
 - Заменить инструмент `echo` в `src/server.ts` на настоящие и поправить список в `src/server.test.ts`.
-- В `verify` из `src/http.ts` проверять токен запросом к API сервиса и возвращать id пользователя.
+- В `verifyToken` из `src/http.ts` проверять токен запросом к API сервиса и возвращать id пользователя.
+- Сбросить версию и историю релизов, иначе новый сервер унаследует их от шаблона:
+  `echo '{}' > .release-please-manifest.json`, `npm pkg set version=0.0.0 && npm install` и пустой
+  `CHANGELOG.md`. Первый релиз тогда возьмёт `initial-version` из `release-please-config.json`.
 - В настройках репозитория разрешить GitHub Actions создавать и одобрять PR, без этого не работает release-please.
 
 ## Плейсхолдеры

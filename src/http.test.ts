@@ -1,21 +1,24 @@
 import assert from 'node:assert/strict'
 import { after, test } from 'node:test'
-import { createHttpApp, memoryStore } from '@aimuzov/infra-mcp-kit/http'
+import { createHttpApp, memoryStore, type HttpConfig } from '@aimuzov/infra-mcp-kit/http'
 import { connectHttp, hiddenField, oauthFlow, startHttp, textOf } from '@aimuzov/infra-mcp-kit/testing'
 
-import { httpOptions } from './http.ts'
+import { httpOptions, type Verify } from './http.ts'
 
-const http = await startHttp(
-	(base) =>
-		createHttpApp(
-			httpOptions(
-				{ port: 0, publicUrl: new URL(base), authSecret: 'x'.repeat(32), allowedRedirectUris: [] },
-				memoryStore(),
-			),
-		).app,
-)
+const config = (base: string): HttpConfig => ({
+	port: 0,
+	publicUrl: new URL(base),
+	authSecret: 'x'.repeat(32),
+	allowedRedirectUris: [],
+})
 
-after(() => http.close())
+// Заглушка вместо проверки токена в API сервиса, которой в шаблоне нет.
+const acceptAny: Verify = ({ token = '' }) => ({ subject: 'user-1', claims: { apiToken: token } })
+
+const http = await startHttp((base) => createHttpApp(httpOptions(config(base), memoryStore(), acceptAny)).app)
+const untouched = await startHttp((base) => createHttpApp(httpOptions(config(base), memoryStore())).app)
+
+after(() => Promise.all([http.close(), untouched.close()]))
 
 /** Что делает человек на странице входа: вставляет токен и отправляет форму. */
 const submit = (token: string) => (page: string, callback: URL) =>
@@ -38,6 +41,10 @@ test('токен из формы входа доезжает до инструм
 
 	assert.equal(again.status, 400)
 	assert.equal(((await again.json()) as { error: string }).error, 'invalid_grant')
+})
+
+test('без своей проверки токена шаблон никого не пускает', async () => {
+	await assert.rejects(oauthFlow({ base: untouched.base, login: submit('secret') }), /Проверка токена не реализована/)
 })
 
 test('/mcp без токена закрыт', async () => {

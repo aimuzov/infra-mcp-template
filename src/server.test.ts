@@ -5,14 +5,14 @@ import { connectInMemory, expectTools, textOf } from '@aimuzov/infra-mcp-kit/tes
 import { createServer, loadContext } from './server.ts'
 
 test('сервер отдаёт ровно свои инструменты', async () => {
-	const client = await connectInMemory(createServer({ apiToken: 't' }))
+	const client = await connectInMemory(createServer({ apiToken: 't', via: 'stdio' }))
 
 	await expectTools(client, ['echo'])
 	await client.close()
 })
 
 test('echo возвращает сообщение', async () => {
-	const client = await connectInMemory(createServer({ apiToken: 't' }))
+	const client = await connectInMemory(createServer({ apiToken: 't', via: 'stdio' }))
 	const result = await client.callTool({ name: 'echo', arguments: { message: 'привет' } })
 
 	assert.equal(textOf(result), 'привет')
@@ -25,5 +25,15 @@ test('без токена инструмент отвечает ошибкой, 
 
 	assert.equal(result.isError, true)
 	assert.match(textOf(result), /API_TOKEN/)
+	await client.close()
+})
+
+test('по HTTP без токена в токене доступа совет переподключиться, а не про env', async () => {
+	const client = await connectInMemory(createServer({ apiToken: '', via: 'http' }))
+	const result = await client.callTool({ name: 'echo', arguments: { message: 'привет' } })
+
+	assert.equal(result.isError, true)
+	assert.match(textOf(result), /Reconnect/)
+	assert.doesNotMatch(textOf(result), /API_TOKEN/)
 	await client.close()
 })
