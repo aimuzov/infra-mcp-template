@@ -19,7 +19,7 @@ npm install
 Then:
 
 - Replace the `echo` tool in `src/server.ts` with the real ones and update the list in `src/server.test.ts`.
-- Make `verify` in `src/http.ts` check the token against the API of the service and return the user id.
+- Make `verifyToken` in `src/http.ts` check the token against the API of the service and return the user id.
 - Reset the version and the release history, or the new server inherits those of the template:
   `echo '{}' > .release-please-manifest.json`, `npm pkg set version=0.0.0 && npm install` and an empty
   `CHANGELOG.md`. The first release then takes `initial-version` from `release-please-config.json`.
