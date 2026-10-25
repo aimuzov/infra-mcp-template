@@ -7,3 +7,4 @@ build
 *.tgz
 .env
 **/*.test.ts
+.astro

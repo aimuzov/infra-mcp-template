@@ -1,21 +1,28 @@
 import { join } from 'node:path'
-import { dataDir, type Env } from '@aimuzov/infra-mcp-kit'
+import { fileURLToPath } from 'node:url'
+import { dataDir, readVersion, type Env } from '@aimuzov/infra-mcp-kit'
 import {
 	loadHttpConfig,
 	LoginError,
+	sendJson,
 	serveHttp,
 	sqliteStore,
 	tokenFormLogin,
 	type AuthStore,
 	type HttpAppOptions,
 	type HttpConfig,
-	type Service,
 	type TokenFormLoginOptions,
 } from '@aimuzov/infra-mcp-kit/http'
 
 import { createServer, NAME } from './server.ts'
 
-export const service: Service = { name: NAME, repo: `https://github.com/aimuzov/${NAME}` }
+/**
+ * Страницы, которые собрал `astro build`. Путь один и из `src`, и из `build`:
+ * `src/http.ts` и `build/http.js` лежат на одной глубине.
+ */
+export const PUBLIC_DIR = fileURLToPath(new URL('../build/public', import.meta.url))
+
+const version = readVersion(import.meta.url)
 
 export type Verify = TokenFormLoginOptions['verify']
 
@@ -30,26 +37,40 @@ export const verifyToken: Verify = () => {
 	throw new LoginError('Проверка токена не реализована, см. TODO в src/http.ts')
 }
 
-export function httpOptions(config: HttpConfig, store: AuthStore, verify: Verify = verifyToken): HttpAppOptions {
+export type HttpParts = {
+	config: HttpConfig
+	store: AuthStore
+	verify?: Verify
+	publicDir?: string
+}
+
+export function httpOptions({
+	config,
+	store,
+	verify = verifyToken,
+	publicDir = PUBLIC_DIR,
+}: HttpParts): HttpAppOptions {
+	// Тексты формы живут в `mcpPages` в astro.config.mjs, здесь только имена полей.
 	// Токен едет в claims, поэтому токены доступа шифруются: иначе он читался бы
 	// из них открытым текстом.
-	const login = tokenFormLogin({
-		title: `Подключение ${NAME}`,
-		lead: 'Токен останется только внутри зашифрованного токена доступа, сервер его не хранит.',
-		fields: [{ name: 'token', label: 'API-токен', type: 'password' }],
-		verify,
-	})
+	const login = tokenFormLogin({ fields: [{ name: 'token', label: 'API-токен' }], verify })
 
 	return {
 		config,
-		service,
+		service: { name: NAME },
+		publicDir,
 		auth: { login, store, tokens: 'encrypt' },
 		createServer: (auth) => createServer({ apiToken: String(auth?.extra?.apiToken ?? ''), via: 'http' }),
-		landing: { tagline: '__DESCRIPTION__', tools: ['echo'] },
+		// Пример своего JSON-маршрута: его читает остров на странице `/status`.
+		routes(app) {
+			app.get('/api/status', (_req, res) => sendJson(res, { name: NAME, version }))
+		},
 	}
 }
 
 /** `serve --http`: клиенты и коды OAuth живут в SQLite в каталоге данных. */
 export async function serve(env: Env = process.env): Promise<void> {
-	await serveHttp(httpOptions(loadHttpConfig(env), sqliteStore(join(dataDir(NAME, env), 'auth.db'))))
+	await serveHttp(
+		httpOptions({ config: loadHttpConfig(env), store: sqliteStore(join(dataDir(NAME, env), 'auth.db')) }),
+	)
 }

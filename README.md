@@ -20,16 +20,29 @@ Then:
 
 - Replace the `echo` tool in `src/server.ts` with the real ones and update the list in `src/server.test.ts`.
 - Make `verifyToken` in `src/http.ts` check the token against the API of the service and return the user id.
+- Put the tools and the texts of the landing and the sign-in form into `mcpPages` in `astro.config.mjs`. The form
+  fields there and in `tokenFormLogin` in `src/http.ts` go by the same names.
+- Keep or drop the `/status` example: `src/frontend/pages/status.astro`, its island and the `/api/status` route.
 - Reset the version and the release history, or the new server inherits those of the template:
   `echo '{}' > .release-please-manifest.json`, `npm pkg set version=0.0.0 && npm install` and an empty
   `CHANGELOG.md`. The first release then takes `initial-version` from `release-please-config.json`.
 - Allow GitHub Actions to create and approve pull requests in the repository settings: release-please needs it.
 
+## Pages
+
+The landing, sign-in, error and 404 pages come from `mcpPages()` of the kit, a page of the server lives in
+`src/frontend/pages` on the kit layout, as on the sites. `npm run build` compiles the server with `tsc` and the pages
+with `astro build` into `build/public`, which the connector serves. Astro and Svelte stay dev dependencies and never
+reach `npx` or the Docker image. `npm run dev:pages` serves the pages alone on the Astro dev server.
+
+A server that only runs over stdio drops `astro.config.mjs`, `svelte.config.js`, `postcss.config.mjs`, `src/frontend`
+and `src/http.ts` along with their dev dependencies.
+
 ## Placeholders
 
 - `__NAME__`: repository, npm package `@aimuzov/__NAME__`, binary and container name.
 - `__DOMAIN__`: address of the hosted connector.
-- `__DESCRIPTION__`: one line for `package.json` and the landing page.
+- `__DESCRIPTION__`: one line for `package.json` and the landing page in `astro.config.mjs`.
 
 ## Release
 
