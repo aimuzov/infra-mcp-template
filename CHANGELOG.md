@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/aimuzov/infra-mcp-template/compare/v0.2.0...v1.0.0) (2026-10-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* move to infra-mcp-kit 3.0 on tmcp
+
+### Features
+
+* move to infra-mcp-kit 3.0 on tmcp ([6eea714](https://github.com/aimuzov/infra-mcp-template/commit/6eea7143d2b809fbdad1b927f20f50f631ecb70c))
+
 ## [0.2.0](https://github.com/aimuzov/infra-mcp-template/compare/v0.1.1...v0.2.0) (2026-10-25)
 
 
