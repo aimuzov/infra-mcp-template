@@ -63,8 +63,10 @@ export function httpOptions({
 		auth: { login, store, tokens: 'encrypt' },
 		createServer: (auth) => createServer({ apiToken: String(auth?.extra?.apiToken ?? ''), via: 'http' }),
 		// Пример своего JSON-маршрута: его читает остров на странице `/status`.
-		routes(app) {
-			app.get('/api/status', (_req, res) => sendJson(res, { name: NAME, version }))
+		routes(request) {
+			const { pathname } = new URL(request.url)
+
+			if (request.method === 'GET' && pathname === '/api/status') return sendJson({ name: NAME, version })
 		},
 	}
 }
