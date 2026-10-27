@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/aimuzov/infra-mcp-template/compare/v1.0.1...v1.0.2) (2026-10-27)
+
+
+### Bug Fixes
+
+* **deps:** move to infra-mcp-kit 3.4.0 and infra-site-kit 5.8.1 ([5d27165](https://github.com/aimuzov/infra-mcp-template/commit/5d27165f4d971d9140e451c82090f156ef8acc38))
+* **deps:** move to infra-mcp-kit 3.4.0 and infra-site-kit 5.8.1 ([0d23129](https://github.com/aimuzov/infra-mcp-template/commit/0d23129d139ac1d76730becd110d1d4f681707ef))
+
 ## [1.0.1](https://github.com/aimuzov/infra-mcp-template/compare/v1.0.0...v1.0.1) (2026-10-27)
 
 
