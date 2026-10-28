@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/aimuzov/infra-mcp-template/compare/v1.0.2...v1.0.3) (2026-10-28)
+
+
+### Bug Fixes
+
+* **deps:** move to infra-mcp-kit 3.4.1 with the strict Sentry events ([b5e8d1f](https://github.com/aimuzov/infra-mcp-template/commit/b5e8d1f31caf137c9b66281d2910580700e92704))
+* **deps:** move to infra-mcp-kit 3.4.1 with the strict Sentry events ([d46966f](https://github.com/aimuzov/infra-mcp-template/commit/d46966f778a9bb13b4dd8be80daad41b2b07c073))
+
 ## [1.0.2](https://github.com/aimuzov/infra-mcp-template/compare/v1.0.1...v1.0.2) (2026-10-27)
 
 
