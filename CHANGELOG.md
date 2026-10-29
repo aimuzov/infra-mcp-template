@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.4](https://github.com/aimuzov/infra-mcp-template/compare/v1.0.3...v1.0.4) (2026-10-29)
+
+
+### Bug Fixes
+
+* **deps:** take infra-mcp-kit from npm ([29ee194](https://github.com/aimuzov/infra-mcp-template/commit/29ee194c8772230483eeee66d27a3a4a742806b2))
+* **deps:** take infra-mcp-kit from npm ([f3a4228](https://github.com/aimuzov/infra-mcp-template/commit/f3a4228b93e1c6e43c29267d5640b14ace481b4f))
+
 ## [1.0.3](https://github.com/aimuzov/infra-mcp-template/compare/v1.0.2...v1.0.3) (2026-10-28)
 
 
