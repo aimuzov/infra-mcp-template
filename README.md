@@ -77,7 +77,7 @@ npm run dev:pages                          # the pages alone, with Astro HMR
 
 A merge into `main` only updates the release PR of release-please. Merging that PR cuts a release, the checks run again, and then:
 
-- with the repository variable `NPM_PUBLISH=true` and the secret `NPM_TOKEN` the release goes to npm;
+- with the repository variable `NPM_PUBLISH=true` and the secret `NPM_TOKEN` the release goes to npm; the token has to bypass 2FA, or npm asks for a one-time password;
 - with `DEPLOY_ENABLED=true` and the secret `DEPLOY_SSH_KEY` it goes to the projects server.
 
 A manual run of `release` publishes the tag given in `tag`; deploy takes the tag too, or the newest `main` when it is empty.
