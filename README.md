@@ -65,7 +65,7 @@ npm run build && node build/index.js serve --http
 npm run dev:pages                          # the pages alone, with Astro HMR
 ```
 
-`serve --http` reads the environment, see [`.env.example`](.env.example): `PUBLIC_URL=http://localhost:8080` and an `AUTH_SECRET` of 32 characters or more (`openssl rand -base64 48`) are enough locally. The data, `auth.db` included, goes to `<NAME>_DATA_DIR`, `$XDG_CONFIG_HOME/<name>` or `~/.config/<name>`. `LOG_LEVEL=debug` prints stacks.
+`serve --http` reads the environment, see [`.env.example`](.env.example): `PUBLIC_URL=http://localhost:8080` and an `AUTH_SECRET` of 32 characters or more (`openssl rand -base64 48`) are enough locally. The data, `auth.db` included, goes to `<NAME>_DATA_DIR`, `$XDG_CONFIG_HOME/<name>` or `~/.config/<name>`. `LOG_LEVEL=debug` prints stacks. `SENTRY_DSN` turns on [error reports](https://github.com/aimuzov/infra-mcp-kit#sentry) to the Sentry project named after the repository, release `__NAME__@<version>`.
 
 ## Placeholders
 

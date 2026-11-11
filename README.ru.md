@@ -65,7 +65,7 @@ npm run build && node build/index.js serve --http
 npm run dev:pages                          # только страницы, с HMR Astro
 ```
 
-`serve --http` читает окружение, см. [`.env.example`](.env.example): локально хватит `PUBLIC_URL=http://localhost:8080` и `AUTH_SECRET` от 32 символов (`openssl rand -base64 48`). Данные, включая `auth.db`, лежат в `<NAME>_DATA_DIR`, `$XDG_CONFIG_HOME/<name>` или `~/.config/<name>`. `LOG_LEVEL=debug` печатает стеки.
+`serve --http` читает окружение, см. [`.env.example`](.env.example): локально хватит `PUBLIC_URL=http://localhost:8080` и `AUTH_SECRET` от 32 символов (`openssl rand -base64 48`). Данные, включая `auth.db`, лежат в `<NAME>_DATA_DIR`, `$XDG_CONFIG_HOME/<name>` или `~/.config/<name>`. `LOG_LEVEL=debug` печатает стеки. `SENTRY_DSN` включает [отчёты об ошибках](https://github.com/aimuzov/infra-mcp-kit/blob/main/README.ru.md#sentry) в проект Sentry с именем репозитория, релиз — `__NAME__@<версия>`.
 
 ## Плейсхолдеры
 

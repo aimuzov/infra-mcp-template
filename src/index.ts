@@ -14,7 +14,8 @@ Environment:
   AUTH_SECRET             key of the access tokens, 32 characters or more, for --http
   PORT                    default 8080
   ALLOWED_REDIRECT_URIS   OAuth callbacks allowed besides Claude and loopback, comma-separated
-  XDG_CONFIG_HOME         data directory, default ~/.config`
+  XDG_CONFIG_HOME         data directory, default ~/.config
+  SENTRY_DSN              report errors to Sentry, off when empty`
 
 await runCli({
 	name: NAME,
