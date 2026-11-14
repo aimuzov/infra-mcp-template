@@ -83,3 +83,5 @@ A merge into `main` only updates the release PR of release-please. Merging that 
 A manual run of `release` publishes the tag given in `tag`; deploy takes the tag too, or the newest `main` when it is empty.
 
 The projects server needs the steps of _Adding a project_ in [infra-server](https://github.com/aimuzov/infra-server#adding-a-project) once: a deploy key, the clone in `/srv/example-mcp`, its `.env` from `.env.example`, `sites/example-mcp.caddy` with `reverse_proxy example-mcp:8080` and the domain pointed at the server. The container listens on 8080, keeps its data in the `example-mcp-data` volume and joins the `edge` network of Caddy without published ports.
+
+Production containers have explicit RAM and total RAM-plus-swap limits. CI validates every service against the shared infra-server policy at https://github.com/aimuzov/infra-server/blob/main/docs/resource-limits.md. Choose any increased budget from measured peaks and keep the Node heap below the container limit.

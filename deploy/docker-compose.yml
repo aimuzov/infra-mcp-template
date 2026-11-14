@@ -21,6 +21,9 @@ services:
     volumes:
       - data:/data
     mem_limit: 256m
+    memswap_limit: 320m
+    environment:
+      NODE_OPTIONS: --max-old-space-size=128
     healthcheck:
       test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:8080/health']
       interval: 30s
