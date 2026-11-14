@@ -29,6 +29,13 @@ jobs:
           docker: deploy/Dockerfile
           coverage-lines: 98
         if: steps.verified.outputs.reused != 'true'
+      - name: Check production memory budgets
+        if: steps.verified.outputs.reused != 'true'
+        env:
+          POLICY_REVISION: b7698e98bcb6b1ad274af612b4bf790b62ae424b
+        run: |
+          curl --fail --silent --show-error --retry 2             "https://raw.githubusercontent.com/aimuzov/infra-server/$POLICY_REVISION/deploy/check-memory-limits.py"             -o "$RUNNER_TEMP/check-memory-limits.py"
+          docker compose -p ci-memory -f deploy/docker-compose.yml config --no-env-resolution --format json             | python3 "$RUNNER_TEMP/check-memory-limits.py"
       - name: Record verified CI
         if: github.event_name == 'pull_request' && steps.verified.outputs.reused != 'true'
         uses: aimuzov/infra-ci/record-check@v1
